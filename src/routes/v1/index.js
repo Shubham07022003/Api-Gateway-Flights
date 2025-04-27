@@ -1,4 +1,5 @@
 const express =require("express");
+const userRoutes = require('./user-routes')
 const {infocontroller} = require('../../controllers')
 const router = express.Router();
 router.get('/info', infocontroller.info);
@@ -6,5 +7,7 @@ router.get('/info', infocontroller.info);
 router.get('/', (req, res) => {
         res.json({ message: 'API is working' });
     });
-module.exports =router;
+// POST: /api/v1/user/signup
+    router.use('/signup', userRoutes);
+module.exports =router;   
 

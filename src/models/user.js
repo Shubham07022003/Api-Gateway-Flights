@@ -2,7 +2,7 @@
 const {
   Model
 } = require('sequelize');
-const { all } = require('../routes');
+//const { all } = require('../routes');
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     /**
@@ -17,11 +17,19 @@ module.exports = (sequelize, DataTypes) => {
   User.init({
     email: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      unique: true,
+      validate: {
+        isEmail: true,
+        
+      }
     },
     password:{ 
       type:DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        len: [8, 50] // Password must be at least 8 characters long
+      }
     }
   }, {
     sequelize,
