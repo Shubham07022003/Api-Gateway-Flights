@@ -3,5 +3,7 @@ const router = express.Router();
 const {userController}  = require('./../../controllers');
 const { StatusCodes } = require('http-status-codes');
 
-router.post('/', userController.signup);
+router.post('/signup', userController.signup);
+router.post('/signin', userController.signin);
+
 module.exports = router;

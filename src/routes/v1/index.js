@@ -8,6 +8,6 @@ router.get('/', (req, res) => {
         res.json({ message: 'API is working' });
     });
 // POST: /api/v1/user/signup
-    router.use('/signup', userRoutes);
+    router.use('/user', userRoutes);
 module.exports =router;   
 
