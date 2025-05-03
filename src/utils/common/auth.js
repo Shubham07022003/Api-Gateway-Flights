@@ -24,8 +24,18 @@ function createToken(input) {
         throw error;
     }
 }
+function verifyToken(token) {
+    try{
+        return jwt.verify(token, ServerConfig.JWT_SECRET);
+    }catch(error){
+        //console.log(error);
+        //throw new AppError('Invalid token', StatusCodes.BAD_REQUEST);
+        throw error;
+    }
+}
 
 module.exports= {
     checkPassword,
-    createToken
+    createToken,
+    verifyToken
 }

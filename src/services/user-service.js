@@ -43,9 +43,35 @@ async function signin(data){
         throw  new AppError('error while signing in the user', StatusCodes.INTERNAL_SERVER_ERROR);
     }
 }
+async function isAuthenticated(token){
+    try{
+        if(!token){
+            throw new AppError('missing JWT tocken', StatusCodes.BAD_REQUEST);
+
+        }
+        const response = Auth.verifyToken(token);
+        const user = await userRepo.get(response.id);
+        if(!user){
+            throw new AppError('no user found for this token', StatusCodes.NOT_FOUND);
+        }
+        return user.id;
+    } catch(error){
+        console.log(error);
+        if(error instanceof AppError)throw error;
+        if(error.name== 'JsonwebTokenError'){
+        throw new AppError('error while verifying the token', StatusCodes.BAD_REQUEST);
+        }
+        if(error.name== 'TokenExpiredError'){
+            throw new AppError(' token is expired', StatusCodes.BAD_REQUEST);
+            }
+        console.log(error);
+        throw error;
+    }
+}
 
 
 module.exports = {
     createUser,
-    signin
+    signin,
+    isAuthenticated
 }
